@@ -30,6 +30,8 @@ amqp.connect('amqp://localhost', (err, connection) => {
             // content holds the buffer message
             // convert it to string for legibility 
             console.log(`Recieved Message : ${message.content.toString()}`);
+        }, {
+            noAck: true // will pass the acknowledgement to every message and then delete the message once in que
         })
     })
 })
