@@ -1,7 +1,13 @@
 Learnings from RabbitMQ content
 
 What is RabbitMQ? -IBM Technology
+High overview: 
 RabbitMQ is a simple and traditional pub/sub message broker system
+async messaging
+distributed deployment
+management and monitoringextensiel through plugsins and tools 
+
+
 Meaning one system communicates with another system through a msg que
 Video: https://www.youtube.com/watch?v=7rkeORD4jSw
 
@@ -16,6 +22,11 @@ limitations:
 
 solution
     - create a message queues / message broker 
+        - message broker : architectural pattern for message validation, transformation, and routing.
+        - based on a first in first out basis
+            - offers two message dist styles
+                1) point to point
+                2) pubs/sub 
     - message brokers sit inbetween the two services that need to communicate with one another
     - with a message que, a checkout service can add a message to the que, and immediately move on to the next task
         - similarly, the invetory service will consume from the que, process messsage, and immediately consume the next message
@@ -132,3 +143,84 @@ existing exchanges and types can be seen in management interface or through "rab
 
 Good to knows 
 RabbitMQ vs Kafka | Trade-off's to choose one over other : https://www.youtube.com/watch?v=GMmRtSFQ5Z0
+
+ - major reason why kafka > rabbitmq = retention of msgs. 
+    - rabbitmq is just a plain point to point, once msg is consumed its deleted from que 
+    - in kafka, can retain for a certain period and/or reconsume a msg from producer again 
+
+RabbitMQ 
+- variations of pub/sub
+- request/response
+- point to point patterns (to do: expand on what point to point communication is)
+- smart broker model 
+    - can levrate rabbitmq to intelligently route traffic across different queues
+- can be synchronous/async
+- push based approach
+    - if producer pushes msg, it gets pushed to a specific que for that specific consumer
+- helps priotize messages 
+- deploys decoupled consumer queues 
+    - for example, can have 2 different events pushed into a single que based on consumer pattern
+    - dont have to tell the producer what you're consuming on the application 
+    - intelligent smart routing logic that can be added within rabbitmq broker itself
+    - on the other hand for kafka, have to plan ahead based if creating multiple partitions based on the type of events pushing onto topic
+    - consumer logic coupled with platform when creating partitions/consumer groups 
+    - ^ (explination @ 4:25)
+
+
+Kafka
+- pub/sub, generally used streaming platforms 
+- smart consumer model 
+    - levrages consumer to decide what kind of routes are taking in 
+    - the broker itself doesn't take any rules/routing positions on type of msgs pushed into Kafka
+- streaming log
+    - mostly durable message store 
+    - levrage to reply messages and rely on kafka for pulling msgs 
+- pull based approach   
+    - producer pushes in logs to kafka platform, consumer responsability is to pull msgs whenever they are available 
+    - constantly pull the kafka broker for pulling msgs out of each partition/topic
+- can order/retain/gurantee msgs 
+
+Different use cases 
+
+RabbitMQ 
+- no event replays, will have to levrate producer to reply 
+- no clear end to end architecture
+    - don't know what how architecture will evolve
+    - for example) we dont know if consumers have different types of events 
+    - not having sight of how many consumers and what type of events those consumers will be taking
+- no producer changes for consumer additions 
+- langauge agnostic
+    - can create multiple micro services support 
+
+Kafka
+- able to reply 
+- streaming
+- high throughput and scale quickly w/ micro services architecture for processing huge number of msgs 
+- can provide majority of APIs to be consumed from speciifc languages, but rabbitmq provides more integrations than kafka
+
+Case study example of rabbitmq vs kafka
+(starts @ 8:27)
+Source reference - jack vanlightly queue vs log case study 
+Link: https://jack-vanlightly.com/blog/2018/5/20/event-driven-architectures-the-queue-vs-the-log
+
+Limitations
+RabbitMQ
+- queues are single threaded
+    - can scale, but only to the degree that the single thread can scale to 
+- complex configurations with more brokers added    
+    - complicated with 5+ brokers for example 
+- no events reply 
+- no native streaming supports
+    - there are different libraries fro streaming capabilites, just not out the box 
+
+Kafka
+- storage overheads
+    - think about storage costs 
+    - stores for a long period of time and replicated for durability 
+- streaming API for specific languages 
+    - open source libraries coming up to levrage streaming APIs 
+- ordering is restritive per partition 
+    - if you want to create ordering across events and partitions you'll have to levreage joins, can't do out of the box 
+- needs producer to coordinate with consumer for partition increases 
+
+
