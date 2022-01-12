@@ -104,3 +104,29 @@ Gives insight on how and where to use msg que and RabbitMQ in architecture
 Mainly used to allow applications to respond to requests quickly rather than forced to complete intensive procedures on the spot that will delay response time
 Two applications/services will only communicate through the que, no direct relationship needed between servers or langauges
 ^ = low coupling between sender and reciever (this is good!)
+
+More info and examples of Exchanges 
+RabbitMq Explained - Exchanges - CloudAMQP 
+Video: https://www.youtube.com/watch?v=o8eU5WiO8fw
+
+- messages are not published directly to the que
+- instead producer sends msgs through an exachange 
+    - exchange can be seen as a mail delivary person that ensures the msg goes to the correct que 
+- how an exchange is routed depends on:
+    - exchange type
+        - specifies routing rules, routing keys, and header attributes  
+        - these are "addresses" for the msgs
+- from que perspective
+    - can check which exchanges and routing rules are linked to a specific que
+    - link = bindings
+    - a binding - links que to exchange, routing key = address for the message 
+    - this is what the exchange looks for when deciding how to route the msg to ques 
+
+4 main types of exchanges (examples start @ 1:40)
+- direct
+- topic
+- fan out
+- headers 
+
+existing exchanges and types can be seen in management interface or through "rabbitmqadmin"
+
