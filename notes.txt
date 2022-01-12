@@ -130,3 +130,5 @@ Video: https://www.youtube.com/watch?v=o8eU5WiO8fw
 
 existing exchanges and types can be seen in management interface or through "rabbitmqadmin"
 
+Good to knows 
+RabbitMQ vs Kafka | Trade-off's to choose one over other : https://www.youtube.com/watch?v=GMmRtSFQ5Z0
