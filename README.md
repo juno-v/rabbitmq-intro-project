@@ -12,3 +12,5 @@ Tutorial found [here](https://www.youtube.com/watch?v=vMFcayVfFvM&list=PLtYTVIzW
 	Default port : localhost:15672 
 	User: guest 
     Password: guest
+
+### Check the notes.txt file for notes that I've written down about RabbitMQ, it includes the videos I've taken down info from

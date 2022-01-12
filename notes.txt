@@ -1,6 +1,8 @@
 Learnings from RabbitMQ content
 
 What is RabbitMQ? -IBM Technology
+RabbitMQ is a simple and traditional pub/sub message broker system
+Meaning one system communicates with another system through a msg que
 Video: https://www.youtube.com/watch?v=7rkeORD4jSw
 
 Simple retail application has: 
@@ -62,6 +64,7 @@ types of exchange
 
 benefits of RabbitMQ
     - tremendous flexbility of how to route messages 
+    - can communicate from different servers or the same server
     - for example) can design system however you want instead of designing based on limitations and then designing accordingly
     - other message brokers, broker administrator's are usually defined on set up 
         - with RabbitMQ, the way that msgs are routed through the system is dependent on the metadata
@@ -91,3 +94,13 @@ Big takeaways
     - flexbility with the way msgs move through the system
     - the fact that msg metadata defines how msgs move through the system as opposed to broker admin
     - super cloud friendly
+
+real life examples explained 
+RabbitMQ Explained Use Cases - CloudAMQP
+Video: https://www.youtube.com/watch?v=oq1fOr6Ryws
+
+Gives insight on how and where to use msg que and RabbitMQ in architecture 
+
+Mainly used to allow applications to respond to requests quickly rather than forced to complete intensive procedures on the spot that will delay response time
+Two applications/services will only communicate through the que, no direct relationship needed between servers or langauges
+^ = low coupling between sender and reciever (this is good!)
