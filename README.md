@@ -5,7 +5,7 @@ Tutorial found here: https://www.youtube.com/watch?v=vMFcayVfFvM&list=PLtYTVIzWW
 
 ## Set Up <br>
 [Getting started](https://www.rabbitmq.com/install-windows.html#chocolatey) <br>
-[How to install #RabbitMQ on windows 10 step by step](https://www.youtube.com/watch?v=V9DWKbalbWQ)
+[How to install #RabbitMQ on windows 10 step by step](https://www.youtube.com/watch?v=V9DWKbalbWQ) <br>
 	https://www.rabbitmq.com/ 
 	RabbitMQ cmds
 	    Rabbitmqctl.bat [start, stop, status]
