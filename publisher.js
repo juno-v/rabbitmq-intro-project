@@ -32,6 +32,8 @@ amqp.connect('amqp://localhost', (err, connection) => {
         // in cmd prompt insert: node .\publisher.js
         // you can see that it closes after 1 second
         setTimeout(() => {
+            // sent message to que
+            console.log(`Message: ${message}`)
             // connection is linked to the 2nd arg passed in amp.connect
             connection.close();
         }, 1000)
