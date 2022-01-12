@@ -1,1 +1,93 @@
 Learnings from RabbitMQ content
+
+What is RabbitMQ? -IBM Technology
+Video: https://www.youtube.com/watch?v=7rkeORD4jSw
+
+Simple retail application has: 
+check out service that needs to communicate with inventory service
+- typically done through a TCP connection 
+limitations:
+        - as soon as a checkout sends a message it needs to hear a reply to move on to the next task
+        - if inventory service went down, it would keep retrying over and over again until it makes that connection
+        - if alot of checkouts happen at once, inventory service will not be able to keep up 
+            - creating a bog down for the entire system
+
+solution
+    - create a message queues / message broker 
+    - message brokers sit inbetween the two services that need to communicate with one another
+    - with a message que, a checkout service can add a message to the que, and immediately move on to the next task
+        - similarly, the invetory service will consume from the que, process messsage, and immediately consume the next message
+benefits
+    - will decouple the two services
+    - message broker helps with scalability 
+    for example) if a lot of checkouts happen at once and the que begins to fill, you can have MORE than one consuming service to handle the ques/workloads
+    - the que itself can sit on it's own machine 
+        - this can offload some of the work that is done in the web application and create better performance
+    
+RabbitMQ
+    - an implimention of AMQP message model 
+        - specifically Advanced Message Queing Protocol Version 0-9-1
+    - with this type of message model 
+        - producer (checkout service) : instead of producing directly to a MSG que, it will produce to an EXCHANGE
+        - think of exchange as a post office 
+            - an exchange will recieve all the msgs then distribute them according to how they're addressed
+            - an exchange can be connected to many queues
+            for example) exchange is connected to TWO queues
+                - queues are connected to the consumers, for example there is one calledd inventory and one called shipping 
+
+Example 
+checkout - send message to exchange
+exchange - connected to queues through bindings
+bindings - can be referenced by the binding key 
+consumers - subscribe to the queues
+
+AMQP, RabbitMQ is the message broker involving the exchange and binding keys (reference 4:10 in the video for picture )
+benefits of message model
+    - flexbility of how the msgs can move through the system
+    - flexbility is largly in part due to the different types of exchanges are available
+
+types of exchange
+    - fanout : checkout will produce to the exchange, the exchange will duplicate msg and send it to every que that the exchange knows about
+    - direct : checkout will produce the msg, then that msg will get a routing key 
+        - the routing key is being compared to the binding key
+        - if there is an exact match, the msg will move through the system accordingly
+    - topic : partial martch between routing key and binding key 
+        - if checkout sent a msg with a routing key = "ship.shoes" and a binding key = "ship.any"
+            - with exchange type of topic 
+            - it will gett routed through that que 
+    - header : routing key is ignored, msgs will move through the system according to the header 
+    - default (nameless): unique only to RabbitMQ
+        - routing key = "inv" , routing key is tied to name of que itself
+        - if que is named "inv" it will route through to that que's matched name 
+
+benefits of RabbitMQ
+    - tremendous flexbility of how to route messages 
+    - for example) can design system however you want instead of designing based on limitations and then designing accordingly
+    - other message brokers, broker administrator's are usually defined on set up 
+        - with RabbitMQ, the way that msgs are routed through the system is dependent on the metadata
+            - the application and developer have control of how the msgs move through the system instead of the broker admin 
+    - cloud friendly
+        - easy to get started 
+        - can deploy an instance on Docker or other containerization softwares
+        - can run as a cluster
+            - fault tolerant
+            - highly available
+            - high throughput
+    - cross language communication
+        - if a msg is produced by a service in GO, the other service can comsume by even Python or Java ect
+    - good security 
+        - supports FASL, LDAP, TLS for authentication and authorization
+    - message acknowledgements
+        - when a msg is in a que and goes to the consumer, the msg stays in the que until the consumer lets the broker know that it has recieved the msg, only then will msg be removed from que and prevents msg loss
+    - great management
+        - out of the box, there is great browser based management UI 
+        - extensive CLI tools 
+    - good open source community to enrich management and monitoring of RabbitMQ
+        - created lots of plug ins to enrich most aspects of RabbitMQ
+        - lots of tools, clients, lots of evolve that RabbitMQ now supports other message models aside from AMQP 0-9-1
+            - msg models such as: MQTT, Stomp, AMQP 1.0
+            - RabbitMq message model support docs here: https://www.rabbitmq.com/protocols.html
+Big takeaways
+    - flexbility with the way msgs move through the system
+    - the fact that msg metadata defines how msgs move through the system as opposed to broker admin
+    - super cloud friendly
