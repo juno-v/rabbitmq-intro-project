@@ -4,8 +4,8 @@ This is a project to document learnings of RabbitMQ <br>
 Tutorial found here: https://www.youtube.com/watch?v=vMFcayVfFvM&list=PLtYTVIzWW8XFHWM3LsG0Yr7co-5JRoiC6 <br>
 
 ## Set Up <br>
-	https://www.rabbitmq.com/ <br>
-	Getting started : https://www.rabbitmq.com/install-windows.html#chocolatey <br>
+	https://www.rabbitmq.com/ 
+	[Getting started](https://www.rabbitmq.com/install-windows.html#chocolatey)
 	RabbitMQ Start stop status cmds
 	Rabbitmqctl.bat [start, stop, status]
 	Default port : localhost:15672
